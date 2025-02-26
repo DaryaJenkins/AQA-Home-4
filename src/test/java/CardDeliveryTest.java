@@ -23,15 +23,15 @@ public class CardDeliveryTest {
 
     @Test
     void shouldSubmitOrderSuccessfully() {
-        generateDate(3, "dd.MM.yyyy");
+        String date = generateDate(3, "dd.MM.yyyy");
         $("[data-test-id='city'] input").setValue("Москва");
         $$("[data-test-id='date'] input").findBy(visible).press(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.BACK_SPACE);
-        $("[data-test-id='date'] input").setValue("01.03.2025");
+        $("[data-test-id='date'] input").setValue(date);
         $("[data-test-id='name'] input").setValue("Иванов Иван");
         $("[data-test-id='phone'] input").setValue("+79991112233");
         $("[data-test-id='agreement']").click();
         $("button.button").click();
         $(byText("Успешно!")).shouldBe(visible, Duration.ofSeconds(15));
-        $(withText(("Встреча успешно забронирована на " + $("[data-test-id='date'] input").getValue()))).shouldBe(visible, Duration.ofSeconds(15));
+        $(byText("Встреча успешно забронирована на " + date)).shouldBe(visible, Duration.ofSeconds(20));
     }
 }
